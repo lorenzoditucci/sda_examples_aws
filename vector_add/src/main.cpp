@@ -53,8 +53,8 @@ int main (int argc, char *argv[]){
 	b = new uint[SIZE];
 	out = new uint[SIZE];
 
-	size_t global[2];                   // global domain size for our calculation
-	  size_t local[2];                    // local domain size for our calculation
+//	size_t global[2];                   // global domain size for our calculation
+//	  size_t local[2];                    // local domain size for our calculation
 
 	  cl_platform_id platform_id;         // platform id
 	  cl_device_id device_id;             // compute device id
@@ -275,12 +275,15 @@ int main (int argc, char *argv[]){
 //	  		printf("LAUNCH task \n");
 //	  	  err = clEnqueueTask(commands, kernel, 0, NULL, &enqueue_kernel);
 //	  	#else
-	  	  global[0] = 1;
-	  	  global[1] = 1;
-	  	  local[0] = 1;
-	  	  local[1] = 1;
-	  	  err = clEnqueueNDRangeKernel(commands, kernel, 2, NULL,
-	  	                               (size_t*)&global, (size_t*)&local, 0, NULL, NULL);
+//	  	  global[0] = 1;
+//	  	  global[1] = 1;
+//	  	  local[0] = 1;
+//	  	  local[1] = 1;
+
+	  	  size_t global[] = {1};
+	  	  size_t local[] = {1};
+	  	  err = clEnqueueNDRangeKernel(commands, kernel, 1, NULL,
+	  	                               global, local, 0, NULL, &enqueue_kernel);
 //	  	#endif
 	  	  if (err)
 	  	  {
@@ -288,6 +291,8 @@ int main (int argc, char *argv[]){
 	  	    printf("Test failed\n");
 	  	    return EXIT_FAILURE;
 	  	  }
+
+	  	clWaitForEvents(1, &enqueue_kernel);
 
 	  	  // Read back the results from the device to verify the output
 	  	  //
@@ -302,7 +307,7 @@ int main (int argc, char *argv[]){
 	  	  }
 
 	  	  clWaitForEvents(1, &readevent);
-	  	  clWaitForEvents(1, &enqueue_kernel);
+
 
 	  	  for(int i = 0; i < SIZE; i++){
 	  		  if(out[i] != i + i){
@@ -314,6 +319,20 @@ int main (int argc, char *argv[]){
 	  	  delete [] a;
 	  	  delete [] b;
 	  	  delete [] out;
+
+	  	printf("computation ended!- RESULTS CORRECT \n");
+	  	fflush(stdout);
+
+	  	  // Shutdown and cleanup
+	  	  //
+	  	  clReleaseMemObject(input_a);
+	  	  clReleaseMemObject(input_b);
+	  	  clReleaseMemObject(output);
+	  	  clReleaseProgram(program);
+	  	  clReleaseKernel(kernel);
+	  	  clReleaseCommandQueue(commands);
+	  	  clReleaseContext(context);
+
 
 	  	  return 0;
 

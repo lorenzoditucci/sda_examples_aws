@@ -18,6 +18,11 @@
         <kernels name="vector_add" sourceFile="src/kernel.cl"/>
       </binaryContainers>
     </configBuildOptions>
+    <lastBuildOptions xsi:type="openclProject:OpenCLOptions" kernelDebug="true" target="hw_emu">
+      <binaryContainers name="binary_container_1">
+        <kernels name="vector_add" sourceFile="src/kernel.cl"/>
+      </binaryContainers>
+    </lastBuildOptions>
   </configuration>
   <configuration name="System" id="com.xilinx.sdx.opencl.config.hw.17555452">
     <configBuildOptions xsi:type="openclProject:OpenCLOptions" target="hw">
