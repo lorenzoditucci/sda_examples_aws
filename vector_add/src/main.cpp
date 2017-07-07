@@ -16,6 +16,26 @@
 
 using namespace std;
 
+//Given an event, this function returns the kernel execution time in ms
+			float getTimeDifference(cl_event event) {
+				cl_ulong time_start = 0;
+				cl_ulong time_end = 0;
+				float total_time = 0.0f;
+
+				clGetEventProfilingInfo(event,
+					CL_PROFILING_COMMAND_START,
+					sizeof(time_start),
+					&time_start,
+					NULL);
+				clGetEventProfilingInfo(event,
+					CL_PROFILING_COMMAND_END,
+					sizeof(time_end),
+					&time_end,
+					NULL);
+				total_time = time_end - time_start;
+				return total_time/ 1000000.0; // To convert nanoseconds to milliseconds
+			}
+
 int
 load_file_to_memory(const char *filename, char **result)
 {
@@ -307,6 +327,8 @@ int main (int argc, char *argv[]){
 	  	  }
 
 	  	  clWaitForEvents(1, &readevent);
+
+	  	  printf("Kernel time %f ms \n", getTimeDifference(enqueue_kernel));
 
 
 	  	  for(int i = 0; i < SIZE; i++){
