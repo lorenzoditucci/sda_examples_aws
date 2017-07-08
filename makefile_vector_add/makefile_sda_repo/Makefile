@@ -1,5 +1,5 @@
 # SHA1 Application
-COMMON_REPO =../../
+COMMON_REPO =./
 
 include $(COMMON_REPO)/utility/boards.mk
 include $(COMMON_REPO)/libs/logger/logger.mk
@@ -7,39 +7,39 @@ include $(COMMON_REPO)/libs/cmdparser/cmdparser.mk
 include $(COMMON_REPO)/libs/opencl/opencl.mk
 
 # hello Host Application
-sha1_SRCS=./src/clSha1.cpp ./src/sha1.c ./src/main.cpp $(logger_SRCS) $(cmdparser_SRCS) $(xcl_SRCS)
-sha1_HDRS=./src/clSha1.h ./src/oswendian.h ./src/sha1.h $(logger_SRCS) $(cmdparser_HDRS) $(xcl_HDRS)
-sha1_CXXFLAGS=-std=gnu++0x -I./src/ $(opencl_CXXFLAGS) $(logger_CXXFLAGS) $(cmdparser_CXXFLAGS) $(xcl_CXXFLAGS)
-sha1_LDFLAGS=$(opencl_LDFLAGS) -lrt
+vec_add_SRCS=main.cpp  $(logger_SRCS) $(cmdparser_SRCS) $(xcl_SRCS)
+vec_add_HDRS= $(logger_SRCS) $(cmdparser_HDRS) $(xcl_HDRS)
+vec_add_CXXFLAGS=-std=gnu++0x -I./src/ $(opencl_CXXFLAGS) $(logger_CXXFLAGS) $(cmdparser_CXXFLAGS) $(xcl_CXXFLAGS)
+vec_add_LDFLAGS=$(opencl_LDFLAGS) -lrt
 
-EXES=sha1
+EXES=vec_add
 
 # SHA1 Kernel
-krnl_sha1_SRCS=./src/krnl_clSha1.cl
-krnl_sha1_HDRS=./src/clSha1.h
-krnl_sha1_CLFLAGS=-I./src/
-krnl_sha1_NDEVICES=xilinx:xil-accel-rd-ku115:4ddr-xpr:3.3 xilinx:adm-pcie-ku3:2ddr-xpr:3.3
+krnl_vec_add_SRCS=./kernel.cl
+krnl_vec_add_HDRS=
+krnl_vec_add_CLFLAGS=-I./src/
+krnl_vec_add_NDEVICES=xilinx:xil-accel-rd-ku115:4ddr-xpr:3.3 xilinx:adm-pcie-ku3:2ddr-xpr:4.0
 
-XOS=krnl_sha1
+XOS=krnl_vec_add
 
 # SHA1 xclbin
-krnl_sha1_XOS=krnl_sha1
-krnl_sha1_LDCLFLAGS=--nk dev_sha1_update:2
-krnl_sha1_NDEVICES=xilinx:xil-accel-rd-ku115:4ddr-xpr:3.3 xilinx:adm-pcie-ku3:2ddr-xpr:3.3
+krnl_vec_add_XOS=krnl_vec_add
+krnl_vec_add_LDCLFLAGS=--nk dev_vec_add_update:2
+krnl_vec_add_NDEVICES=xilinx:xil-accel-rd-ku115:4ddr-xpr:3.3 xilinx:adm-pcie-ku3:2ddr-xpr:4.0
 
-XCLBINS=krnl_sha1
+XCLBINS=krnl_vec_add
 
 # check
-check_EXE=sha1
-check_XCLBINS=krnl_sha1
-check_NDEVICES=$(krnl_sha1_NDEVICES)
+check_EXE=vec_add
+check_XCLBINS=krnl_vec_add
+check_NDEVICES=$(krnl_vec_add_NDEVICES)
 
 # Pattern to allow cmdline to determine xclbin name
 define mk_args
-check_$(1)_$(call sanitize_dsa,$(2))_ARGS = -t 20 -p Xilinx -d $(2) -k ./xclbin/krnl_sha1.$(1).$(call sanitize_dsa,$(2)).xclbin
+check_$(1)_$(call sanitize_dsa,$(2))_ARGS = -t 20 -p Xilinx -d $(2) -k ./xclbin/krnl_vec_add.$(1).$(call sanitize_dsa,$(2)).xclbin
 endef
 
-DEVICES=xilinx:adm-pcie-7v3:1ddr:3.0
+DEVICES=xilinx:adm-pcie-7v3:2ddr:4.0
 
 $(foreach target,$(TARGETS),$(foreach device,$(DEVICES),$(eval $(call mk_args,$(target),$(device)))))
 
