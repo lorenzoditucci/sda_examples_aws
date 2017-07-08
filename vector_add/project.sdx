@@ -30,5 +30,10 @@
         <kernels name="vector_add" sourceFile="src/kernel.cl"/>
       </binaryContainers>
     </configBuildOptions>
+    <lastBuildOptions xsi:type="openclProject:OpenCLOptions" target="hw">
+      <binaryContainers name="binary_container_1">
+        <kernels name="vector_add" sourceFile="src/kernel.cl"/>
+      </binaryContainers>
+    </lastBuildOptions>
   </configuration>
 </openclProject:OpenCLProject>
