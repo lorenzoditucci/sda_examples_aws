@@ -18,14 +18,14 @@ EXES=vec_add
 krnl_vec_add_SRCS=./kernel.cl
 krnl_vec_add_HDRS=
 krnl_vec_add_CLFLAGS=-I./src/
-krnl_sha1_NDEVICES=xilinx:xil-accel-rd-vu9p xilinx:xil-accel-rd-ku115:4ddr-xpr xilinx:adm-pcie-ku3:2ddr-xpr xilinx:adm-pcie-7v3:1ddr
+krnl_vec_add_NDEVICES=xilinx:xil-accel-rd-vu9p xilinx:xil-accel-rd-ku115:4ddr-xpr xilinx:adm-pcie-ku3:2ddr-xpr xilinx:adm-pcie-7v3:1ddr
 
 XOS=krnl_vec_add
 
 # SHA1 xclbin
 krnl_vec_add_XOS=krnl_vec_add
 krnl_vec_add_LDCLFLAGS=--nk dev_vec_add_update:2
-krnl_sha1_NDEVICES=xilinx:xil-accel-rd-vu9p:4ddr-xpr xilinx:xil-accel-rd-ku115:4ddr-xpr xilinx:adm-pcie-ku3:2ddr-xpr xilinx:adm-pcie-7v3:1ddr
+krnl_vec_add_NDEVICES=xilinx:xil-accel-rd-vu9p:4ddr-xpr xilinx:xil-accel-rd-ku115:4ddr-xpr xilinx:adm-pcie-ku3:2ddr-xpr xilinx:adm-pcie-7v3:1ddr
 
 
 XCLBINS=krnl_vec_add
