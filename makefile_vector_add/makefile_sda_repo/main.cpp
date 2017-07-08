@@ -134,9 +134,9 @@ int main (int argc, char *argv[]){
 	  // Connect to a compute device
 	  //
 	  int fpga = 0;
-	#if defined (FPGA_DEVICE)
+	//#if defined (FPGA_DEVICE)
 	  fpga = 1;
-	#endif
+	//#endif
 		printf("get device \n");
 	  err = clGetDeviceIDs(platform_id, fpga ? CL_DEVICE_TYPE_ACCELERATOR : CL_DEVICE_TYPE_CPU,
 	                       1, &device_id, NULL);

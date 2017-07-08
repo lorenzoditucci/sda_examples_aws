@@ -24,7 +24,7 @@ XOS=krnl_vec_add
 
 # SHA1 xclbin
 krnl_vec_add_XOS=krnl_vec_add
-krnl_vec_add_LDCLFLAGS=--nk dev_vec_add_update:2
+krnl_vec_add_LDCLFLAGS=--nk vector_add:1 #top_funciont_name:number_of_compute_units
 krnl_vec_add_NDEVICES=xilinx:xil-accel-rd-vu9p:4ddr-xpr xilinx:xil-accel-rd-ku115:4ddr-xpr xilinx:adm-pcie-ku3:2ddr-xpr xilinx:adm-pcie-7v3:1ddr
 
 
@@ -37,7 +37,8 @@ check_NDEVICES=$(krnl_vec_add_NDEVICES)
 
 # Pattern to allow cmdline to determine xclbin name
 define mk_args
-check_$(1)_$(call sanitize_dsa,$(2))_ARGS = -t 20 -p Xilinx -d $(2) -k ./xclbin/krnl_vec_add.$(1).$(call sanitize_dsa,$(2)).xclbin
+#check_$(1)_$(call sanitize_dsa,$(2))_ARGS = -t 20 -p Xilinx -d $(2) -k ./xclbin/krnl_vec_add.$(1).$(call sanitize_dsa,$(2)).xclbin
+check_$(1)_$(call sanitize_dsa,$(2))_ARGS = ./xclbin/krnl_vec_add.$(1).$(call sanitize_dsa,$(2)).xclbin
 endef
 
 #DEVICES=xilinx:adm-pcie-ku3:2ddr-xpr:4.0
