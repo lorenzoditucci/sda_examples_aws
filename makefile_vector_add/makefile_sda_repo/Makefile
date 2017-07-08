@@ -18,14 +18,14 @@ EXES=vec_add
 krnl_vec_add_SRCS=./kernel.cl
 krnl_vec_add_HDRS=
 krnl_vec_add_CLFLAGS=-I./src/
-krnl_vec_add_NDEVICES=xilinx:xil-accel-rd-ku115:4ddr-xpr:3.3 xilinx:adm-pcie-ku3:2ddr-xpr:4.0
+#krnl_vec_add_NDEVICES=xilinx:xil-accel-rd-ku115:4ddr-xpr:3.3 xilinx:adm-pcie-ku3:2ddr-xpr:4.0
 
 XOS=krnl_vec_add
 
 # SHA1 xclbin
 krnl_vec_add_XOS=krnl_vec_add
 krnl_vec_add_LDCLFLAGS=--nk dev_vec_add_update:2
-krnl_vec_add_NDEVICES=xilinx:xil-accel-rd-ku115:4ddr-xpr:3.3 xilinx:adm-pcie-ku3:2ddr-xpr:4.0
+#krnl_vec_add_NDEVICES=xilinx:xil-accel-rd-ku115:4ddr-xpr:3.3 xilinx:adm-pcie-ku3:2ddr-xpr:4.0
 
 XCLBINS=krnl_vec_add
 
@@ -39,7 +39,9 @@ define mk_args
 check_$(1)_$(call sanitize_dsa,$(2))_ARGS = -t 20 -p Xilinx -d $(2) -k ./xclbin/krnl_vec_add.$(1).$(call sanitize_dsa,$(2)).xclbin
 endef
 
+#DEVICES=xilinx:adm-pcie-ku3:2ddr-xpr:4.0
 DEVICES=xilinx:adm-pcie-ku3:2ddr-xpr:4.0
+
 
 $(foreach target,$(TARGETS),$(foreach device,$(DEVICES),$(eval $(call mk_args,$(target),$(device)))))
 
