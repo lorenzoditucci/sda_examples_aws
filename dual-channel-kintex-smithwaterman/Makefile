@@ -68,6 +68,8 @@ xclbin:  xo
 emulation:  host xclbin
 	export XCL_EMULATION_MODE=$(target)
 	emconfigutil --xdevice $(target_device) --nd 1
+	./$(host_exe) ./$(kernel_exe).xclbin
+	$(info Remeber to export XCL_EMULATION_MODE=$(target) and run emcondigutil for emulation purposes)
 
 #sw_emu: host xclbin
 #	export XCL_EMULATION_MODE=$(target)
@@ -78,6 +80,8 @@ emulation:  host xclbin
 #	#add stuff to run
 
 build:  host xclbin
+
+
 
 run_system:  build
 	./$(host_exe) $(kernel_exe)
