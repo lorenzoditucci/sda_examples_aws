@@ -448,7 +448,7 @@ int main(int argc, char** argv)
 #if defined (FPGA_DEVICE)
   fpga = 1;
 #endif
-	printf("get device \n");
+	printf("get device, fpga is %d \n", fpga);
   err = clGetDeviceIDs(platform_id, fpga ? CL_DEVICE_TYPE_ACCELERATOR : CL_DEVICE_TYPE_CPU,
                        1, &device_id, NULL);
   if (err != CL_SUCCESS)
@@ -556,13 +556,13 @@ int main(int argc, char** argv)
 
   //input_a = clCreateBuffer(context,  CL_MEM_READ_ONLY,  sizeof(unsigned char) * N, NULL, NULL);
 	printf("create buffer 0 \n");
-  input_a = clCreateBuffer(context,  CL_MEM_READ_ONLY | CL_MEM_EXT_PTR_XILINX,  sizeof(unsigned int) * N/16, &input_a_ext, NULL);
+  input_a = clCreateBuffer(context,  CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR | CL_MEM_EXT_PTR_XILINX,  sizeof(unsigned int) * N/16, &input_a_ext, NULL);
   //input_b = clCreateBuffer(context,  CL_MEM_READ_ONLY,  sizeof(unsigned char) * (M + 2*(N - 1)), NULL, NULL);
 	printf("create buffer 1 \n");
-  input_b = clCreateBuffer(context,  CL_MEM_READ_ONLY | CL_MEM_EXT_PTR_XILINX,  sizeof(unsigned int) * (M + 2*(N - 1))/16, &input_b_ext, NULL);
+  input_b = clCreateBuffer(context,  CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR |CL_MEM_EXT_PTR_XILINX,  sizeof(unsigned int) * (M + 2*(N - 1))/16, &input_b_ext, NULL);
   //output = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(unsigned short) * N*(N+M-1), NULL, NULL);
 	printf("create buffer 2 \n");
-  output = clCreateBuffer(context, CL_MEM_WRITE_ONLY | CL_MEM_EXT_PTR_XILINX, sizeof(char)* 256*(N+M-1), &output_ext, NULL);
+  output = clCreateBuffer(context, CL_MEM_WRITE_ONLY | CL_MEM_USE_HOST_PTR | CL_MEM_EXT_PTR_XILINX, sizeof(char)* 256*(N+M-1), &output_ext, NULL);
   
 if (!input_a || !input_b || !output)
   {
@@ -645,6 +645,11 @@ cl_event enqueue_kernel;
     printf("Test failed\n");
     return EXIT_FAILURE;
   }
+	printf("enqueued, waiting to end computation\n");
+	fflush(stdout);
+   clWaitForEvents(1, &enqueue_kernel);
+	printf("computation ended\n");
+	fflush(stdout);
 
   // Read back the results from the device to verify the output
   //
@@ -659,7 +664,6 @@ cl_event enqueue_kernel;
   }
 
   clWaitForEvents(1, &readevent);
-   clWaitForEvents(1, &enqueue_kernel);
 
 	float executionTime = getTimeDifference(enqueue_kernel); 
     	/*
