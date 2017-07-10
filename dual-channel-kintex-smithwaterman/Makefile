@@ -38,15 +38,19 @@ target_device=xilinx:adm-pcie-ku3:2ddr-xpr:4.0
 
 #target for compilation [sw_emu | hw_emu | hw]
 target=none
+report=none
 ifeq (${target}, sw_emu)
 $(info software emulation)
 target=sw_emu
+report=none
 else ifeq (${target}, hw_emu)
 $(info hardware emulation)
 target=hw_emu
+report=estimate
 else ifeq (${target}, hw)
 $(info system build)
 target=hw
+report=system
 else
 $(info no target selected)
 endif
@@ -60,10 +64,10 @@ host:  $(host_src) $(host_hdrs)
 	$(CC) $(host_src) $(host_hdrs) $(host_cflags) $(host_lflags) -o $(host_exe)
 
 xo: 
-	$(XOCC) --platform $(target_device) --target $(target) --compile --kernel $(kernel_name) $(kernel_src) $(kernel_LDCLFLAGS) $(kernel_hdrs) $(kernel_flags)  --output $(kernel_exe).xo
+	$(XOCC) --platform $(target_device) --target $(target) --compile --save-temps --report $(report) --kernel $(kernel_name) $(kernel_src) $(kernel_LDCLFLAGS) $(kernel_hdrs) $(kernel_flags)  --output $(kernel_exe).xo
 
 xclbin:  xo
-	$(XOCC) --platform $(target_device) --target $(target) --link --kernel $(kernel_name) $(kernel_exe).xo $(kernel_LDCLFLAGS) $(kernel_hdrs) $(kernel_flags) --output $(kernel_exe).xclbin
+	$(XOCC) --platform $(target_device) --target $(target) --link --save-temps --report $(report) --kernel $(kernel_name) $(kernel_exe).xo $(kernel_LDCLFLAGS) $(kernel_hdrs) $(kernel_flags) --output $(kernel_exe).xclbin
 
 emulation:  host xclbin
 	export XCL_EMULATION_MODE=$(target)
