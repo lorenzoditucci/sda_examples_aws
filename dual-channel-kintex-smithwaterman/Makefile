@@ -1,4 +1,10 @@
-#Basic Makefile for SDAccel 2017.1
+#################################################################################
+#
+#	Basic Makefile for SDAccel 2017.1
+#	Usage make [emulation | build | clean] target=<cpu_emu | hw_emu | hw>
+#
+#
+#################################################################################
 XOCC=xocc
 CC=g++
 
