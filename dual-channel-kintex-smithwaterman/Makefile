@@ -60,10 +60,10 @@ host:  $(host_src) $(host_hdrs)
 	$(CC) $(host_src) $(host_hdrs) $(host_cflags) $(host_lflags) -o $(host_exe)
 
 xo: 
-	$(XOCC) --platform $(target_device) --target $(target) --compile --kernel $(kernel_name) $(kernel_src) $(kernel_LDCLFLAGS)--output $(kernel_exe).xo
+	$(XOCC) --platform $(target_device) --target $(target) --compile --kernel $(kernel_name) $(kernel_src) $(kernel_LDCLFLAGS) $(kernel_hdrs) $(kernel_flags)  --output $(kernel_exe).xo
 
 xclbin:  xo
-	$(XOCC) --platform $(target_device) --target $(target) --link --kernel $(kernel_name) $(kernel_exe).xo $(kernel_LDCLFLAGS) --output $(kernel_exe).xclbin
+	$(XOCC) --platform $(target_device) --target $(target) --link --kernel $(kernel_name) $(kernel_exe).xo $(kernel_LDCLFLAGS) $(kernel_hdrs) $(kernel_flags) --output $(kernel_exe).xclbin
 
 emulation:  host xclbin
 	export XCL_EMULATION_MODE=$(target)
