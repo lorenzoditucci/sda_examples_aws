@@ -52,12 +52,16 @@ xclbin: xo
 
 sw_emu: host xclbin
 	export XCL_EMULATION_MODE=$(target)
-	emconfigutil -f xilinx:adm-pcie-ku3:2ddr-xpr:4.0 --nd 1
+	emconfigutil --xdevice $(target_device) --nd 1
+	#emconfigutil -f xilinx:adm-pcie-ku3:2ddr-xpr:4.0 --nd 1
 
-hw_emu: cpu_emu
+hw_emu: host xclbin
+	#add stuff to run
+
+build: host xclbin
 
 run_system: host xclbin
 	./$(host_exe) $(kernel_exe)
 
 clean: 
-	rm -rf $(host_exe) $(kernel_exe).xo $(kernel_exe).xclbin
+	rm -rf $(host_exe) $(kernel_exe).xo $(kernel_exe).xclbin .Xil emconfig.json 
