@@ -42,7 +42,7 @@ report=none
 ifeq (${target}, sw_emu)
 $(info software emulation)
 target=sw_emu
-report=none
+report=estimate
 else ifeq (${target}, hw_emu)
 $(info hardware emulation)
 target=hw_emu
