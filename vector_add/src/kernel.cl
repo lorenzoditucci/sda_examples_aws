@@ -12,9 +12,9 @@ __attribute__((reqd_work_group_size(1,1,1)))
 #endif
 kernel void vector_add(global uint *a, global uint *b, global uint *out){
 
-uint a_local[SIZE] __attribute((xcl_array_partition(cyclic, 128, 1)));
-uint b_local[SIZE] __attribute((xcl_array_partition(cyclic, 128, 1)));
-uint out_local[SIZE] __attribute((xcl_array_partition(cyclic, 128, 1)));
+uint a_local[SIZE];
+uint b_local[SIZE];
+uint out_local[SIZE];
 
 #ifdef __xilinx
 	__attribute__((xcl_pipelineloop))
