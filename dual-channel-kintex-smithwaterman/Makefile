@@ -93,7 +93,7 @@ run_system:  build
 clean:
 	rm -rf $(host_exe) $(kernel_exe).xo $(kernel_exe).xclbin .Xil emconfig.json 
 cleanall: clean
-	rm -rf _xocc_*
+	rm -rf _xocc_* sdaccel_profile_summary.* system_estimate.xtxt
 
 
 
