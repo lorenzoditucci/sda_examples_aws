@@ -1,0 +1,35 @@
+starting HOST code 
+array defined! 
+database and query filled with random values..
+GET platform 
+GET platform vendor 
+CL_PLATFORM_VENDOR Xilinx
+GET platform name 
+CL_PLATFORM_NAME Xilinx
+get device, fpga is 1 
+create context 
+create queue 
+loading smithwaterman.xclbin
+create program with binary 
+build program 
+create kernel 
+create buffer 0 
+WARNING: unaligned host pointer detected, this leads to extra memcpy
+create buffer 1 
+WARNING: unaligned host pointer detected, this leads to extra memcpy
+create buffer 2 
+WARNING: unaligned host pointer detected, this leads to extra memcpy
+write buffer 0 
+write buffer 1 
+set arg 0 
+set arg 1 
+set arg 2 
+LAUNCH task 
+enqueued, waiting to end computation
+computation ended
+read buffer 
+ERROR: Failed to sync 268500736/-1 bytes
+res
+both ended execution time is 6.323603 ms 
+Error, mismatch in the results, i + 9, SW: 2, HW 0 
+WARNING: Profiling may contain incomplete information. Please call clReleaseProgram() from your host code.
