@@ -28,5 +28,5 @@ Custom Makefile, change the source files and options for Xocc to run it.
 ```C
 make [emulation | build | clean] target=<cpu_emu | hw_emu | hw>
  
-```C
+```
 
