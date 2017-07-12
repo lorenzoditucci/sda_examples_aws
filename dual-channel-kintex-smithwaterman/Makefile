@@ -35,6 +35,7 @@ KERNEL_LDCLFLAGS=--nk $(KERNEL_NAME):1 \
 	--xp misc:map_connect=add.kernel.smithwaterman_1.M_AXI_GMEM1.core.OCL_REGION_0.M01_AXI \
 	--xp misc:map_connect=add.kernel.smithwaterman_1.M_AXI_GMEM2.core.OCL_REGION_0.M00_AXI 
 
+KERNEL_ADDITIONAL_FLAGS=
 
 TARGET_DEVICE=xilinx:adm-pcie-ku3:2ddr-xpr:4.0
 
@@ -64,7 +65,9 @@ else
 $(info no TARGET selected)
 endif
 
-dest_dir=$(TARGET)/$(TARGET_DEVICE)
+PERIOD:= :
+UNDERSCORE:= _
+dest_dir=$(TARGET)/$(subst $(PERIOD),$(UNDERSCORE),$(TARGET_DEVICE))
 
 ifndef XILINX_SDX
 $(error XILINX_SDX is not set. Please source the SDx settings64.{csh,sh} first)
@@ -94,10 +97,10 @@ host:  check_TARGET $(HOST_SRC) $(HOST_HDRS)
 
 xo:	check_TARGET
 	mkdir -p $(dest_dir)
-	$(XOCC) --platform $(TARGET_DEVICE) --target $(TARGET) --compile --include $(KERNEL_HDRS) --save-temps $(REPORT) --kernel $(KERNEL_NAME) $(KERNEL_SRC) $(KERNEL_LDCLFLAGS) $(KERNEL_FLAGS)  --output $(dest_dir)/$(KERNEL_EXE).xo
+	$(XOCC) --platform $(TARGET_DEVICE) --target $(TARGET) --compile --include $(KERNEL_HDRS) --save-temps $(REPORT) --kernel $(KERNEL_NAME) $(KERNEL_SRC) $(KERNEL_LDCLFLAGS) $(KERNEL_FLAGS) $(KERNEL_ADDITIONAL_FLAGS) --output $(dest_dir)/$(KERNEL_EXE).xo
 
 xclbin:  check_TARGET xo
-	$(XOCC) --platform $(TARGET_DEVICE) --target $(TARGET) --link --include $(KERNEL_HDRS) --save-temps $(REPORT) --kernel $(KERNEL_NAME) $(dest_dir)/$(KERNEL_EXE).xo $(KERNEL_LDCLFLAGS) $(KERNEL_FLAGS) --output $(dest_dir)/$(KERNEL_EXE).xclbin
+	$(XOCC) --platform $(TARGET_DEVICE) --target $(TARGET) --link --include $(KERNEL_HDRS) --save-temps $(REPORT) --kernel $(KERNEL_NAME) $(dest_dir)/$(KERNEL_EXE).xo $(KERNEL_LDCLFLAGS) $(KERNEL_FLAGS) $(KERNEL_ADDITIONAL_FLAGS) --output $(dest_dir)/$(KERNEL_EXE).xclbin
 
 emulation:  host xclbin
 	export XCL_EMULATION_MODE=$(TARGET)
