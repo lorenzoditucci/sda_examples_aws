@@ -47,7 +47,7 @@ $(info software emulation)
 TARGET=sw_emu
 ifeq (${REPORT_FLAG}, y)
 $(info creating REPORT for software emulation set to true. This is going to take longer at it will synthesize the kernel)
-REPORT=--REPORT estimate
+REPORT=--report estimate
 else
 $(info I am not creating a REPORT for software emulation, set REPORT_FLAG=y if you want it)
 REPORT=
@@ -55,11 +55,11 @@ endif
 else ifeq (${TARGET}, hw_emu)
 $(info hardware emulation)
 TARGET=hw_emu
-REPORT=--REPORT estimate
+REPORT=--report estimate
 else ifeq (${TARGET}, hw)
 $(info system build)
 TARGET=hw
-REPORT=--REPORT system
+REPORT=--report system
 else
 $(info no TARGET selected)
 endif
@@ -94,10 +94,10 @@ host:  check_TARGET $(HOST_SRC) $(HOST_HDRS)
 
 xo:	check_TARGET
 	mkdir -p $(dest_dir)
-	$(XOCC) --platform $(TARGET_DEVICE) --TARGET $(TARGET) --compile --include $(KERNEL_HDRS) --save-temps $(REPORT) --kernel $(KERNEL_NAME) $(KERNEL_SRC) $(KERNEL_LDCLFLAGS) $(KERNEL_FLAGS)  --output $(dest_dir)/$(KERNEL_EXE).xo
+	$(XOCC) --platform $(TARGET_DEVICE) --target $(TARGET) --compile --include $(KERNEL_HDRS) --save-temps $(REPORT) --kernel $(KERNEL_NAME) $(KERNEL_SRC) $(KERNEL_LDCLFLAGS) $(KERNEL_FLAGS)  --output $(dest_dir)/$(KERNEL_EXE).xo
 
 xclbin:  check_TARGET xo
-	$(XOCC) --platform $(TARGET_DEVICE) --TARGET $(TARGET) --link --include $(KERNEL_HDRS) --save-temps $(REPORT) --kernel $(KERNEL_NAME) $(dest_dir)/$(KERNEL_EXE).xo $(KERNEL_LDCLFLAGS) $(KERNEL_FLAGS) --output $(dest_dir)/$(KERNEL_EXE).xclbin
+	$(XOCC) --platform $(TARGET_DEVICE) --target $(TARGET) --link --include $(KERNEL_HDRS) --save-temps $(REPORT) --kernel $(KERNEL_NAME) $(dest_dir)/$(KERNEL_EXE).xo $(KERNEL_LDCLFLAGS) $(KERNEL_FLAGS) --output $(dest_dir)/$(KERNEL_EXE).xclbin
 
 emulation:  host xclbin
 	export XCL_EMULATION_MODE=$(TARGET)
