@@ -1,6 +1,8 @@
 #######################################################################################################################################
 #
 #	Basic Makefile for SDAccel 2017.1
+#	Lorenzo Di Tucci, Emanuele Del Sozzo
+#	{lorenzo.ditucci, emanuele.delsozzo}@polimi.it
 #	Usage make [emulation | build | clean | clean_sw_emu | clean_hw_emu | clean_hw | cleanall] target=<sw_emu | hw_emu | hw>
 #
 #
@@ -62,6 +64,7 @@ else
 $(info no target selected)
 endif
 
+dest_dir=$(target)/$(target_device)
 
 ifndef XILINX_SDX
 $(error XILINX_SDX is not set. Please source the SDx settings64.{csh,sh} first)
@@ -86,20 +89,20 @@ ifeq (${target}, none)
 endif
 
 host:  check_target $(host_src) $(host_hdrs)
-	mkdir -p $(target)
-	$(CC) $(host_src) $(host_hdrs) $(host_cflags) $(host_lflags) -o $(target)/$(host_exe)
+	mkdir -p $(dest_dir)
+	$(CC) $(host_src) $(host_hdrs) $(host_cflags) $(host_lflags) -o $(dest_dir)/$(host_exe)
 
 xo:	check_target
-	mkdir -p $(target)
-	$(XOCC) --platform $(target_device) --target $(target) --compile --include $(kernel_hdrs) --save-temps $(report) --kernel $(kernel_name) $(kernel_src) $(kernel_LDCLFLAGS) $(kernel_flags)  --output $(target)/$(kernel_exe).xo
+	mkdir -p $(dest_dir)
+	$(XOCC) --platform $(target_device) --target $(target) --compile --include $(kernel_hdrs) --save-temps $(report) --kernel $(kernel_name) $(kernel_src) $(kernel_LDCLFLAGS) $(kernel_flags)  --output $(dest_dir)/$(kernel_exe).xo
 
 xclbin:  check_target xo
-	$(XOCC) --platform $(target_device) --target $(target) --link --include $(kernel_hdrs) --save-temps $(report) --kernel $(kernel_name) $(target)/$(kernel_exe).xo $(kernel_LDCLFLAGS) $(kernel_flags) --output $(target)/$(kernel_exe).xclbin
+	$(XOCC) --platform $(target_device) --target $(target) --link --include $(kernel_hdrs) --save-temps $(report) --kernel $(kernel_name) $(dest_dir)/$(kernel_exe).xo $(kernel_LDCLFLAGS) $(kernel_flags) --output $(dest_dir)/$(kernel_exe).xclbin
 
 emulation:  host xclbin
 	export XCL_EMULATION_MODE=$(target)
 	emconfigutil --xdevice $(target_device) --nd 1
-	./$(target)/$(host_exe) $(target)/$(kernel_exe).xclbin
+	./$(dest_dir)/$(host_exe) $(dest_dir)/$(kernel_exe).xclbin
 	$(info Remeber to export XCL_EMULATION_MODE=$(target) and run emcondigutil for emulation purposes)
 
 #sw_emu: host xclbin
@@ -114,7 +117,7 @@ build:  host xclbin
 
 
 run_system:  build
-	./$(host_exe) $(kernel_exe)
+	./$(dest_dir)/$(host_exe) $(dest_dir)/$(kernel_exe)
 
 
 
