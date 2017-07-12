@@ -26,7 +26,7 @@ Same vector addition as above, deployed with GUI
 Custom Makefile, change the source files and options for Xocc to run it.
 
 ```C
-make [emulation | build | clean] target=<cpu_emu | hw_emu | hw>
+make [emulation | build | clean] target=<sw_emu | hw_emu | hw>
  
 ```C
 
