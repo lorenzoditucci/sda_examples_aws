@@ -1,7 +1,9 @@
 #######################################################################################################################################
 #
 #	Basic Makefile for SDAccel 2017.1
-#	Usage make [emulation | build | clean | clean_sw_emu | clean_hw_emu | clean_hw | cleanall] target=<sw_emu | hw_emu | hw>
+#	Lorenzo Di Tucci, Emanuele Del Sozzo
+#	{lorenzo.ditucci, emanuele.delsozzo}@polimi.it
+#	Usage make [emulation | build | clean | clean_sw_emu | clean_hw_emu | clean_hw | cleanall] TARGET=<sw_emu | hw_emu | hw>
 #
 #
 #######################################################################################################################################
@@ -9,59 +11,60 @@ XOCC=xocc
 CC=g++
 
 #Host code
-host_src=./test-cl-2ddr.cpp
-host_hdrs=
-host_cflags=-D FPGA_DEVICE -g -Wall -I${XILINX_SDX}/runtime/include/1_2 -D C_KERNEL -O3 -Wall
-host_lflags=-L${XILINX_SDX}/runtime/lib/x86_64 -lxilinxopencl
+HOST_SRC=./test-cl-2ddr.cpp
+HOST_HDRS=
+HOST_CFLAGS=-D FPGA_DEVICE -g -Wall -I${XILINX_SDX}/runtime/include/1_2 -D C_KERNEL -O3 -Wall
+HOST_LFLAGS=-L${XILINX_SDX}/runtime/lib/x86_64 -lxilinxopencl
 
 #name of host executable
-host_exe=host_sw
+HOST_EXE=host_sw
 
 #kernel
-kernel_src=./smithwaterman.cpp
-kernel_hdrs=
-kernel_flags=
-kernel_exe=smithwaterman
-kernel_name=smithwaterman
+KERNEL_SRC=./smithwaterman.cpp
+KERNEL_HDRS=
+KERNEL_FLAGS=
+KERNEL_EXE=smithwaterman
+KERNEL_NAME=smithwaterman
 
 #custom flag to give to xocc
-kernel_LDCLFLAGS=--nk $(kernel_name):1 \
+KERNEL_LDCLFLAGS=--nk $(KERNEL_NAME):1 \
 	--xp param:compiler.preserveHlsOutput=1 \
-	--max_memory_ports $(kernel_name) \
-	--memory_port_data_width $(kernel_name):512 \
+	--max_memory_ports $(KERNEL_NAME) \
+	--memory_port_data_width $(KERNEL_NAME):512 \
 	--xp misc:map_connect=add.kernel.smithwaterman_1.M_AXI_GMEM0.core.OCL_REGION_0.M00_AXI \
 	--xp misc:map_connect=add.kernel.smithwaterman_1.M_AXI_GMEM1.core.OCL_REGION_0.M01_AXI \
 	--xp misc:map_connect=add.kernel.smithwaterman_1.M_AXI_GMEM2.core.OCL_REGION_0.M00_AXI 
 
 
-target_device=xilinx:adm-pcie-ku3:2ddr-xpr:4.0
+TARGET_DEVICE=xilinx:adm-pcie-ku3:2ddr-xpr:4.0
 
-#target for compilation [sw_emu | hw_emu | hw]
-target=none
-report_flag=n
-report=
-ifeq (${target}, sw_emu)
+#TARGET for compilation [sw_emu | hw_emu | hw]
+TARGET=none
+REPORT_FLAG=n
+REPORT=
+ifeq (${TARGET}, sw_emu)
 $(info software emulation)
-target=sw_emu
-ifeq (${report_flag}, y)
-$(info creating report for software emulation set to true. This is going to take longer at it will synthesize the kernel)
-report=--report estimate
+TARGET=sw_emu
+ifeq (${REPORT_FLAG}, y)
+$(info creating REPORT for software emulation set to true. This is going to take longer at it will synthesize the kernel)
+REPORT=--report estimate
 else
-$(info I am not creating a report for software emulation, set report_flag=y if you want it)
-report=
+$(info I am not creating a REPORT for software emulation, set REPORT_FLAG=y if you want it)
+REPORT=
 endif
-else ifeq (${target}, hw_emu)
+else ifeq (${TARGET}, hw_emu)
 $(info hardware emulation)
-target=hw_emu
-report=--report estimate
-else ifeq (${target}, hw)
+TARGET=hw_emu
+REPORT=--report estimate
+else ifeq (${TARGET}, hw)
 $(info system build)
-target=hw
-report=--report system
+TARGET=hw
+REPORT=--report system
 else
-$(info no target selected)
+$(info no TARGET selected)
 endif
 
+dest_dir=$(TARGET)/$(TARGET_DEVICE)
 
 ifndef XILINX_SDX
 $(error XILINX_SDX is not set. Please source the SDx settings64.{csh,sh} first)
@@ -80,31 +83,31 @@ clean_hw: clean
 cleanall: clean_sw_emu clean_hw_emu clean_hw
 	rm -rf _xocc_* xcl_design_wrapper_*
 
-check_target:
-ifeq (${target}, none)
+check_TARGET:
+ifeq (${TARGET}, none)
 	$(error Target can not be set to none)
 endif
 
-host:  check_target $(host_src) $(host_hdrs)
-	mkdir -p $(target)
-	$(CC) $(host_src) $(host_hdrs) $(host_cflags) $(host_lflags) -o $(target)/$(host_exe)
+host:  check_TARGET $(HOST_SRC) $(HOST_HDRS)
+	mkdir -p $(dest_dir)
+	$(CC) $(HOST_SRC) $(HOST_HDRS) $(HOST_CFLAGS) $(HOST_LFLAGS) -o $(dest_dir)/$(HOST_EXE)
 
-xo:	check_target
-	mkdir -p $(target)
-	$(XOCC) --platform $(target_device) --target $(target) --compile --include $(kernel_hdrs) --save-temps $(report) --kernel $(kernel_name) $(kernel_src) $(kernel_LDCLFLAGS) $(kernel_flags)  --output $(target)/$(kernel_exe).xo
+xo:	check_TARGET
+	mkdir -p $(dest_dir)
+	$(XOCC) --platform $(TARGET_DEVICE) --target $(TARGET) --compile --include $(KERNEL_HDRS) --save-temps $(REPORT) --kernel $(KERNEL_NAME) $(KERNEL_SRC) $(KERNEL_LDCLFLAGS) $(KERNEL_FLAGS)  --output $(dest_dir)/$(KERNEL_EXE).xo
 
-xclbin:  check_target xo
-	$(XOCC) --platform $(target_device) --target $(target) --link --include $(kernel_hdrs) --save-temps $(report) --kernel $(kernel_name) $(target)/$(kernel_exe).xo $(kernel_LDCLFLAGS) $(kernel_flags) --output $(target)/$(kernel_exe).xclbin
+xclbin:  check_TARGET xo
+	$(XOCC) --platform $(TARGET_DEVICE) --target $(TARGET) --link --include $(KERNEL_HDRS) --save-temps $(REPORT) --kernel $(KERNEL_NAME) $(dest_dir)/$(KERNEL_EXE).xo $(KERNEL_LDCLFLAGS) $(KERNEL_FLAGS) --output $(dest_dir)/$(KERNEL_EXE).xclbin
 
 emulation:  host xclbin
-	export XCL_EMULATION_MODE=$(target)
-	emconfigutil --xdevice $(target_device) --nd 1
-	./$(target)/$(host_exe) $(target)/$(kernel_exe).xclbin
-	$(info Remeber to export XCL_EMULATION_MODE=$(target) and run emcondigutil for emulation purposes)
+	export XCL_EMULATION_MODE=$(TARGET)
+	emconfigutil --xdevice $(TARGET_DEVICE) --nd 1
+	./$(dest_dir)/$(HOST_EXE) $(dest_dir)/$(KERNEL_EXE).xclbin
+	$(info Remeber to export XCL_EMULATION_MODE=$(TARGET) and run emcondigutil for emulation purposes)
 
 #sw_emu: host xclbin
-#	export XCL_EMULATION_MODE=$(target)
-#	emconfigutil --xdevice $(target_device) --nd 1
+#	export XCL_EMULATION_MODE=$(TARGET)
+#	emconfigutil --xdevice $(TARGET_DEVICE) --nd 1
 #	#emconfigutil -f xilinx:adm-pcie-ku3:2ddr-xpr:4.0 --nd 1
 
 #hw_emu: host xclbin
@@ -114,7 +117,7 @@ build:  host xclbin
 
 
 run_system:  build
-	./$(host_exe) $(kernel_exe)
+	./$(dest_dir)/$(HOST_EXE) $(dest_dir)/$(KERNEL_EXE)
 
 
 
