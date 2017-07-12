@@ -63,7 +63,7 @@ ALL TIMES.
 #define DATA_SIZE MATRIX_RANK*MATRIX_RANK
 
 #define N 256
-#define M 1048576
+#define M 512
 
 const short GAP_i = -1;
 const short GAP_d = -1;
@@ -389,6 +389,7 @@ int main(int argc, char** argv)
     b[i] = 'C';
   } */
 
+  	for(i = 0; i < 256*(N+M-1); i++) results2[i] = 0;
 	for(i = 0; i < N/16; i++) query_param[i] = 0;
 	for(i = 0; i < (M + 2*(N))/16; i++) database_param[i] = 0;
 
@@ -562,7 +563,7 @@ int main(int argc, char** argv)
   input_b = clCreateBuffer(context,  CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR |CL_MEM_EXT_PTR_XILINX,  sizeof(unsigned int) * (M + 2*(N - 1))/16, &input_b_ext, NULL);
   //output = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(unsigned short) * N*(N+M-1), NULL, NULL);
 	printf("create buffer 2 \n");
-  output = clCreateBuffer(context, CL_MEM_WRITE_ONLY | CL_MEM_USE_HOST_PTR | CL_MEM_EXT_PTR_XILINX, sizeof(char)* 256*(N+M-1), &output_ext, NULL);
+  output = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR | CL_MEM_EXT_PTR_XILINX, sizeof(char)* 256*(N+M-1), &output_ext, NULL);
   
 if (!input_a || !input_b || !output)
   {
@@ -595,7 +596,14 @@ if (!input_a || !input_b || !output)
     printf("Test failed\n");
     return EXIT_FAILURE;
   }
-    
+   	printf("write buffer 2 (initializing output buffer to all 0s \n");
+  err = clEnqueueWriteBuffer(commands, output, CL_TRUE, 0, sizeof(char) * (256*(N+M-1)), results2, 0, NULL, NULL);
+  if (err != CL_SUCCESS)
+  {
+    printf("Error: Failed to write to source output!\n");
+    printf("Test failed\n");
+    return EXIT_FAILURE;
+  } 
   // Set the arguments to our compute kernel
   //
   err = 0;
