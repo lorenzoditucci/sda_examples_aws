@@ -81,7 +81,7 @@ clean_hw: clean
 	rm -rf hw
 
 cleanall: clean_sw_emu clean_hw_emu clean_hw
-	rm -rf _xocc_*
+	rm -rf _xocc_* xcl_design_wrapper_*
 
 check_target:
 ifeq (${target}, none)
