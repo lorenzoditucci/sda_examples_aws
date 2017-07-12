@@ -829,7 +829,7 @@ printf("res\n");
   }
 */
     
-	printf(" execution time is %f ms \n", executionTime);
+	printf(" execution time is %f ms - %f GCUPS\n", executionTime, (N*M/(executionTime * 0.001))*0.000000001);
   for(int i = 0; i < N*M; i++){
     if(directionMatrixSW[i] != out_matrix[i]){
       printf("Error, mismatch in the results, i + %d, SW: %d, HW %d \n", i,directionMatrixSW[i], out_matrix[i]);
