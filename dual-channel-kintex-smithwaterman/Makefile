@@ -91,10 +91,10 @@ host:  check_target $(host_src) $(host_hdrs)
 
 xo:	check_target
 	mkdir -p $(target)
-	$(XOCC) --platform $(target_device) --target $(target) --compile --include $(kernel_hdrs) --save-temps $(report) --kernel $(kernel_name) $(kernel_src) $(kernel_LDCLFLAGS) $(kernel_hdrs) $(kernel_flags)  --output $(target)/$(kernel_exe).xo
+	$(XOCC) --platform $(target_device) --target $(target) --compile --include $(kernel_hdrs) --save-temps $(report) --kernel $(kernel_name) $(kernel_src) $(kernel_LDCLFLAGS) $(kernel_flags)  --output $(target)/$(kernel_exe).xo
 
 xclbin:  check_target xo
-	$(XOCC) --platform $(target_device) --target $(target) --link --include $(kernel_hdrs) --save-temps $(report) --kernel $(kernel_name) $(target)/$(kernel_exe).xo $(kernel_LDCLFLAGS) $(kernel_hdrs) $(kernel_flags) --output $(target)/$(kernel_exe).xclbin
+	$(XOCC) --platform $(target_device) --target $(target) --link --include $(kernel_hdrs) --save-temps $(report) --kernel $(kernel_name) $(target)/$(kernel_exe).xo $(kernel_LDCLFLAGS) $(kernel_flags) --output $(target)/$(kernel_exe).xclbin
 
 emulation:  host xclbin
 	export XCL_EMULATION_MODE=$(target)
