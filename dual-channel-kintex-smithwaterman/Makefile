@@ -1,10 +1,10 @@
-#################################################################################
+#######################################################################################################################################
 #
 #	Basic Makefile for SDAccel 2017.1
-#	Usage make [emulation | build | clean] target=<sw_emu | hw_emu | hw>
+#	Usage make [emulation | build | clean | clean_sw_emu | clean_hw_emu | clean_hw | cleanall] target=<sw_emu | hw_emu | hw>
 #
 #
-#################################################################################
+#######################################################################################################################################
 XOCC=xocc
 CC=g++
 
@@ -38,19 +38,26 @@ target_device=xilinx:adm-pcie-ku3:2ddr-xpr:4.0
 
 #target for compilation [sw_emu | hw_emu | hw]
 target=none
-report=none
+report_flag=n
+report=
 ifeq (${target}, sw_emu)
 $(info software emulation)
 target=sw_emu
-report=estimate
+ifeq (${report_flag}, y)
+$(info creating report for software emulation set to true. This is going to take longer at it will synthesize the kernel)
+report=--report estimate
+else
+$(info I am not creating a report for software emulation, set report_flag=y if you want it)
+report=
+endif
 else ifeq (${target}, hw_emu)
 $(info hardware emulation)
 target=hw_emu
-report=estimate
+report=--report estimate
 else ifeq (${target}, hw)
 $(info system build)
 target=hw
-report=system
+report=--report system
 else
 $(info no target selected)
 endif
@@ -60,19 +67,39 @@ ifndef XILINX_SDX
 $(error XILINX_SDX is not set. Please source the SDx settings64.{csh,sh} first)
 endif
 
-host:  $(host_src) $(host_hdrs)
-	$(CC) $(host_src) $(host_hdrs) $(host_cflags) $(host_lflags) -o $(host_exe)
+clean:
+	rm -rf .Xil emconfig.json 
 
-xo: 
-	$(XOCC) --platform $(target_device) --target $(target) --compile --include $(kernel_hdrs) --save-temps --report $(report) --kernel $(kernel_name) $(kernel_src) $(kernel_LDCLFLAGS) $(kernel_hdrs) $(kernel_flags)  --output $(kernel_exe).xo
+clean_sw_emu: clean
+	rm -rf sw_emu
+clean_hw_emu: clean
+	rm -rf hw_emu
+clean_hw: clean
+	rm -rf hw
 
-xclbin:  xo
-	$(XOCC) --platform $(target_device) --target $(target) --link --include $(kernel_hdrs) --save-temps --report $(report) --kernel $(kernel_name) $(kernel_exe).xo $(kernel_LDCLFLAGS) $(kernel_hdrs) $(kernel_flags) --output $(kernel_exe).xclbin
+cleanall: clean_sw_emu clean_hw_emu clean_hw
+	rm -rf _xocc_*
+
+check_target:
+ifeq (${target}, none)
+	$(error Target can not be set to none)
+endif
+
+host:  check_target $(host_src) $(host_hdrs)
+	mkdir -p $(target)
+	$(CC) $(host_src) $(host_hdrs) $(host_cflags) $(host_lflags) -o $(target)/$(host_exe)
+
+xo:	check_target
+	mkdir -p $(target)
+	$(XOCC) --platform $(target_device) --target $(target) --compile --include $(kernel_hdrs) --save-temps $(report) --kernel $(kernel_name) $(kernel_src) $(kernel_LDCLFLAGS) $(kernel_hdrs) $(kernel_flags)  --output $(target)/$(kernel_exe).xo
+
+xclbin:  check_target xo
+	$(XOCC) --platform $(target_device) --target $(target) --link --include $(kernel_hdrs) --save-temps $(report) --kernel $(kernel_name) $(target)/$(kernel_exe).xo $(kernel_LDCLFLAGS) $(kernel_hdrs) $(kernel_flags) --output $(target)/$(kernel_exe).xclbin
 
 emulation:  host xclbin
 	export XCL_EMULATION_MODE=$(target)
 	emconfigutil --xdevice $(target_device) --nd 1
-	./$(host_exe) ./$(kernel_exe).xclbin
+	./$(target)/$(host_exe) $(target)/$(kernel_exe).xclbin
 	$(info Remeber to export XCL_EMULATION_MODE=$(target) and run emcondigutil for emulation purposes)
 
 #sw_emu: host xclbin
@@ -86,15 +113,8 @@ emulation:  host xclbin
 build:  host xclbin
 
 
-
 run_system:  build
 	./$(host_exe) $(kernel_exe)
-
-clean:
-	rm -rf $(host_exe) $(kernel_exe).xo $(kernel_exe).xclbin .Xil emconfig.json 
-cleanall: clean
-	rm -rf _xocc_* sdaccel_profile_summary.* system_estimate.xtxt
-
 
 
 

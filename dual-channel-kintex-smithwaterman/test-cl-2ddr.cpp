@@ -343,7 +343,7 @@ int main(int argc, char** argv)
 //int sw_results[DATA_SIZE];          // results returned from device
 
 
-	unsigned int * query_param = (unsigned int *)malloc(sizeof(unsigned int) * N/16);
+	unsigned int * query_param  = (unsigned int *)malloc(sizeof(unsigned int) * N/16);
 	unsigned int * database_param = (unsigned int *)malloc(sizeof(unsigned int) * (M + 2*(N))/16);
 
 
@@ -366,9 +366,9 @@ int main(int argc, char** argv)
   char cl_platform_vendor[1001];
   char cl_platform_name[1001];
    
-  cl_mem input_a;                     // device memory used for the input array
-  cl_mem input_b;                     // device memory used for the input array
-  cl_mem output;                      // device memory used for the output array
+  cl_mem input_a ;                     // device memory used for the input array
+  cl_mem input_b ;                     // device memory used for the input array
+  cl_mem output ;                      // device memory used for the output array
    
   if (argc != 2){
     printf("%s <inputfile>\n", argv[0]);
@@ -539,31 +539,31 @@ int main(int argc, char** argv)
   //64*((N*(N+M-1)/256)+1)
 
 
-	cl_mem_ext_ptr_t input_a_ext;
-	cl_mem_ext_ptr_t input_b_ext;
-	cl_mem_ext_ptr_t output_ext;
+	cl_mem_ext_ptr_t input_a_ext ;
+	cl_mem_ext_ptr_t input_b_ext ;
+	cl_mem_ext_ptr_t output_ext ;
 	
 	input_a_ext.flags = XCL_MEM_DDR_BANK0;
-	input_a_ext.obj =  query_param;
+	input_a_ext.obj =  NULL;
 	input_a_ext.param = 0;
 	
 	input_b_ext.flags = XCL_MEM_DDR_BANK1;
-	input_b_ext.obj =  database_param;
+	input_b_ext.obj =  NULL;
 	input_b_ext.param = 0;
 	
 	output_ext.flags = XCL_MEM_DDR_BANK0;
-	output_ext.obj =  results2;
+	output_ext.obj = NULL;
 	output_ext.param = 0;
 
   //input_a = clCreateBuffer(context,  CL_MEM_READ_ONLY,  sizeof(unsigned char) * N, NULL, NULL);
 	printf("create buffer 0 \n");
-  input_a = clCreateBuffer(context,  CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR | CL_MEM_EXT_PTR_XILINX,  sizeof(unsigned int) * N/16, &input_a_ext, NULL);
+  input_a = clCreateBuffer(context,  CL_MEM_READ_ONLY | CL_MEM_EXT_PTR_XILINX,  sizeof(unsigned int) * N/16, &input_a_ext, NULL);
   //input_b = clCreateBuffer(context,  CL_MEM_READ_ONLY,  sizeof(unsigned char) * (M + 2*(N - 1)), NULL, NULL);
 	printf("create buffer 1 \n");
-  input_b = clCreateBuffer(context,  CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR |CL_MEM_EXT_PTR_XILINX,  sizeof(unsigned int) * (M + 2*(N - 1))/16, &input_b_ext, NULL);
+  input_b = clCreateBuffer(context,  CL_MEM_READ_ONLY  | CL_MEM_EXT_PTR_XILINX,  sizeof(unsigned int) * (M + 2*(N - 1))/16, &input_b_ext, NULL);
   //output = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(unsigned short) * N*(N+M-1), NULL, NULL);
 	printf("create buffer 2 \n");
-  output = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR | CL_MEM_EXT_PTR_XILINX, sizeof(char)* 256*(N+M-1), &output_ext, NULL);
+  output = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_EXT_PTR_XILINX, sizeof(char)* 256*(N+M-1), &output_ext, NULL);
   
 if (!input_a || !input_b || !output)
   {
