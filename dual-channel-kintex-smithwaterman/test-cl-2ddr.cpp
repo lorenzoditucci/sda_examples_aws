@@ -63,7 +63,7 @@ ALL TIMES.
 #define DATA_SIZE MATRIX_RANK*MATRIX_RANK
 
 #define N 256
-#define M 512
+#define M 1048576
 
 const short GAP_i = -1;
 const short GAP_d = -1;

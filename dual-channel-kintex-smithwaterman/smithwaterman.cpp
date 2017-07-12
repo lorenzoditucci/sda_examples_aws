@@ -5,8 +5,7 @@
 #define NUM_ELEM 128
 #define SIZE_BYTE 32
 #define N 256
-//#define M 1048576
-#define M 512
+#define M 1048576
 
 const short GAP_i = -1;
 const short GAP_d = -1;
