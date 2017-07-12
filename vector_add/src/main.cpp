@@ -8,6 +8,7 @@
 #define SIZE 2048
 
 #include <cstdlib>
+#include <cstdio>
 #include <iostream>
 #include <string>
 #include <cstring>
