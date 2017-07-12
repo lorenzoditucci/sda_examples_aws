@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <SDx_Setting>
+      <SDx_Project name="smithwaterman"></SDx_Project>
+      <SDx_Target name="System Run"></SDx_Target>
+      <SDx_Epoch name="1499898830666"></SDx_Epoch>
+      <SDx_Platform name="xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0"></SDx_Platform>
+   </SDx_Setting>
+   <db_ref_list>
+      <db_ref path="sdaccel_timeline_trace.wdb" id="1">
+         <top_modules>
+            <top_module name="top" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="2" />
+   <wvobject type="group" fp_name="hostGroup">
+      <obj_property name="label">Host</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <obj_property name="Description_Data">Activity on host CPU</obj_property>
+      <wvobject type="group" fp_name="APICallGroup">
+         <obj_property name="label">Open CL API Calls</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <obj_property name="Description_Data">Calls to OpenCL API</obj_property>
+         <wvobject db_ref_id="1" type="other" fp_name="/top/General">
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="ElementShortName">General</obj_property>
+            <obj_property name="ObjectShortName">General</obj_property>
+            <obj_property name="label">General</obj_property>
+            <obj_property name="EnumTransactionColorTable">INACTIVE=blank clBuildProgram=#FF8000 clWaitForEvents=#C5101A clGetPlatformIDs=#DAA520 clGetPlatformInfo=#DAA520 clGetDeviceInfo=#DAA520 clGetDeviceIDs=#DAA520 clSetKernelArg=#DAA520 clCreateKernel=#139394 clCreateContextFromType=#139394 clCreateBuffer=#139394 clCreateCommandQueue=#139394 clCreateProgramWithBinary=#139394 clCreateImage=#139394 clCreateContext=#139394</obj_property>
+            <obj_property name="CustomSignalColor">#708090</obj_property>
+            <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+            <obj_property name="Description_Data">API calls that are not queued</obj_property>
+            <obj_property name="Detail_Data">/top/detail/HostGeneral</obj_property>
+         </wvobject>
+         <wvobject db_ref_id="1" type="other" fp_name="/top/Queue_10335F0">
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="ElementShortName">Queue_10335F0</obj_property>
+            <obj_property name="ObjectShortName">Queue_10335F0</obj_property>
+            <obj_property name="label">Queue: 10335F0</obj_property>
+            <obj_property name="EnumTransactionColorTable">INACTIVE=blank clEnqueueNDRangeKernel=#4DB34D clEnqueueTask=#4DB34D clEnqueueReadBuffer=#2B2B75 clEnqueueReadImage=#2B2B75 clEnqueueWriteBuffer=#813535 clEnqueueWriteImage=#813535 clEnqueueMigrateMemObjects=#228B22 clEnqueueMigrateMem=#228B22 clEnqueueMapBuffer=#2B2B75 clEnqueueUnmapMemObject=#813535</obj_property>
+            <obj_property name="CustomSignalColor">#708090</obj_property>
+            <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+            <obj_property name="Description_Data">API calls on queue 10335F0</obj_property>
+            <obj_property name="Detail_Data">/top/detail/Queue_tooptip10335F0</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="groupDataTransfer">
+         <obj_property name="label">Data Transfer</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <obj_property name="Description_Data">Data transfers between host and global memory</obj_property>
+         <wvobject db_ref_id="1" type="array" fp_name="/top/Host_Read_Address">
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="ElementShortName">Read</obj_property>
+            <obj_property name="ObjectShortName">Read</obj_property>
+            <obj_property name="label">Read</obj_property>
+            <obj_property name="unexpandable"></obj_property>
+            <obj_property name="CustomSignalColor">#2B2B75</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+            <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+            <obj_property name="EnumTransactionColorTable">XXXXXXXXXX=blank</obj_property>
+            <obj_property name="EnumTransactionValueTable">XXXXXXXXXX=blank</obj_property>
+            <obj_property name="Detail_Data">/top/detail/HostRead</obj_property>
+            <obj_property name="Description_Data">Read data transfers from global memory to host</obj_property>
+         </wvobject>
+         <wvobject db_ref_id="1" type="array" fp_name="/top/Host_Write_Address">
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="ElementShortName">Write</obj_property>
+            <obj_property name="ObjectShortName">Write</obj_property>
+            <obj_property name="label">Write</obj_property>
+            <obj_property name="unexpandable"></obj_property>
+            <obj_property name="CustomSignalColor">#813535</obj_property>
+            <obj_property name="UseCustomSignalColor">true</obj_property>
+            <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+            <obj_property name="EnumTransactionColorTable">XXXXXXXXXX=blank</obj_property>
+            <obj_property name="EnumTransactionValueTable">XXXXXXXXXX=blank</obj_property>
+            <obj_property name="Detail_Data">/top/detail/HostWrite</obj_property>
+            <obj_property name="Description_Data">Write data transfer from host to global memory</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="divider" fp_name="xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0_divider">
+      <obj_property name="label"> </obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">#FFFFFF</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0_group">
+      <obj_property name="label">Device &quot;xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0&quot;</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <obj_property name="Description_Data">Activity on device &quot;xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0&quot;</obj_property>
+      <wvobject type="group" fp_name="xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0_smithwaterman_group">
+         <obj_property name="label">Binary Container &quot;smithwaterman&quot;</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <obj_property name="Description_Data">Activity in binary container&quot;smithwaterman&quot;</obj_property>
+         <wvobject type="group" fp_name="group_xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0_smithwaterman_Kernel_Data_Transfer">
+            <obj_property name="label">Kernel Data Transfer</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <obj_property name="Description_Data">Data transfers between kernels and global memory</obj_property>
+            <wvobject db_ref_id="1" type="other" fp_name="/top/\xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0_smithwaterman\_Kernel_Data_Transfer_Read">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">.Read</obj_property>
+               <obj_property name="ObjectShortName">Kernel_Data_Transfer.Read</obj_property>
+               <obj_property name="label">Read</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="unexpandable"></obj_property>
+               <obj_property name="CustomSignalColor">#2B2B75</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank</obj_property>
+               <obj_property name="EnumTransactionValueTable">0=blank;1=active;2=active;3=active</obj_property>
+               <obj_property name="Description_Data">Read data transfers from global memory to kernels</obj_property>
+               <obj_property name="Detail_Data">/top/detail/\xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0_smithwaterman\_read_tooltip</obj_property>
+            </wvobject>
+            <wvobject db_ref_id="1" type="other" fp_name="/top/\xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0_smithwaterman\_Kernel_Data_Transfer_Write">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">.Write</obj_property>
+               <obj_property name="ObjectShortName">Kernel_Data_Transfer.Write</obj_property>
+               <obj_property name="label">Write</obj_property>
+               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+               <obj_property name="unexpandable"></obj_property>
+               <obj_property name="CustomSignalColor">#813535</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank</obj_property>
+               <obj_property name="EnumTransactionValueTable">0=blank;1=active;2=active;3=active</obj_property>
+               <obj_property name="Description_Data">Write data transfers from kernels to global memory</obj_property>
+               <obj_property name="Detail_Data">/top/detail/\xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0_smithwaterman\_write_tooltip</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0_smithwaterman_smithwaterman_1:1:1_group">
+            <obj_property name="label">Kernel &quot;smithwaterman&quot; 1:1:1</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <obj_property name="Description_Data">Activity in kernel &quot;smithwaterman&quot;</obj_property>
+            <wvobject db_ref_id="1" type="other" fp_name="/top/\xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0_smithwaterman_smithwaterman_1:1:1_all\">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">Compute Unit &quot;all&quot;</obj_property>
+               <obj_property name="ObjectShortName">Compute Unit &quot;all&quot;</obj_property>
+               <obj_property name="label">Compute Unit &quot;all&quot;</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank</obj_property>
+               <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="Description_Data">Activity in compute unit &quot;all&quot;</obj_property>
+               <obj_property name="Detail_Data">/top/detail/\xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0_smithwaterman_smithwaterman_1:1:1_all\_tooltip</obj_property>
+            </wvobject>
+            <wvobject db_ref_id="1" type="other" fp_name="/top/\xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0_smithwaterman_smithwaterman_1:1:1_smithwaterman_1\">
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="ElementShortName">Compute Unit &quot;smithwaterman_1&quot;</obj_property>
+               <obj_property name="ObjectShortName">Compute Unit &quot;smithwaterman_1&quot;</obj_property>
+               <obj_property name="label">Compute Unit &quot;smithwaterman_1&quot;</obj_property>
+               <obj_property name="EnumTransactionColorTable">0=blank</obj_property>
+               <obj_property name="CustomSignalColor">#4DB34D</obj_property>
+               <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="Description_Data">Activity in compute unit &quot;smithwaterman_1&quot;</obj_property>
+               <obj_property name="Detail_Data">/top/detail/\xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0_smithwaterman_smithwaterman_1:1:1_smithwaterman_1\_tooltip</obj_property>
+            </wvobject>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+</wave_config>
