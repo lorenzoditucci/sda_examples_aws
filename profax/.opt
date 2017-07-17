@@ -1,0 +1,9 @@
+The input file is: sw_emu/xilinx_adm-pcie-ku3_2ddr-xpr_4.0/prova1.angs
+The simulation will have 1000 trial steps
+Each step consists of a backbone move followed by 5 sidechain moves
+Each backbone move consists of changing 1 backbone angles with a StDev of 10
+Each rotamer move consists of changing 1 rotamers selected at random.
+The temperature of the simulation is 298.15
+Intermediate results will be saved every 1000 trial backbone steps
+Only final output will be saved in the current directory
+The random seed is 0
