@@ -1,6 +1,6 @@
 SDAccel Profile Summary
-Generated on: 2017-07-13 00:33:50
-Msec since Epoch: 1499898830666
+Generated on: 2017-07-17 22:34:39
+Msec since Epoch: 1500323679242
 Profiled application: host_sw
 Target platform: Xilinx
 Target devices: xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0
@@ -9,75 +9,75 @@ Tool version: 2017.1
 
 OpenCL API Calls
 API Name,Number Of Calls,Total Time (ms),Minimum Time (ms),Average Time (ms),Maximum Time (ms),
-clCreateProgramWithBinary,1,333.405,333.405,333.405,333.405,
-clEnqueueReadBuffer,1,180.768,180.768,180.768,180.768,
-clWaitForEvents,2,168.584,0.005948,84.2919,168.578,
-clEnqueueWriteBuffer,3,41.9538,0.124017,13.9846,41.6316,
-clReleaseProgram,1,20.5687,20.5687,20.5687,20.5687,
-clCreateBuffer,3,0.037236,0.007673,0.012412,0.021681,
-clEnqueueTask,1,0.035135,0.035135,0.035135,0.035135,
-clReleaseMemObject,3,0.029455,0.004414,0.00981833,0.020173,
-clGetPlatformIDs,1,0.025872,0.025872,0.025872,0.025872,
-clSetKernelArg,3,0.018986,0.004766,0.00632867,0.009179,
-clCreateContext,1,0.014355,0.014355,0.014355,0.014355,
-clGetEventProfilingInfo,2,0.012091,0.00502,0.0060455,0.007071,
-clCreateKernel,1,0.011302,0.011302,0.011302,0.011302,
-clGetPlatformInfo,2,0.010723,0.004211,0.0053615,0.006512,
-clCreateCommandQueue,1,0.008271,0.008271,0.008271,0.008271,
-clBuildProgram,1,0.008232,0.008232,0.008232,0.008232,
-clGetDeviceIDs,1,0.006867,0.006867,0.006867,0.006867,
-clReleaseKernel,1,0.005924,0.005924,0.005924,0.005924,
-clReleaseCommandQueue,1,0.005565,0.005565,0.005565,0.005565,
-clReleaseContext,1,0.004875,0.004875,0.004875,0.004875,
+clCreateProgramWithBinary,1,3249.22,3249.22,3249.22,3249.22,
+clEnqueueReadBuffer,1,181.169,181.169,181.169,181.169,
+clWaitForEvents,2,168.106,0.006336,84.0529,168.099,
+clEnqueueWriteBuffer,3,42.5545,0.143598,14.1848,42.2548,
+clReleaseProgram,1,20.5506,20.5506,20.5506,20.5506,
+clCreateBuffer,3,0.038592,0.00786,0.012864,0.022046,
+clEnqueueTask,1,0.034703,0.034703,0.034703,0.034703,
+clGetPlatformIDs,1,0.030431,0.030431,0.030431,0.030431,
+clReleaseMemObject,3,0.028702,0.004673,0.00956733,0.019299,
+clSetKernelArg,3,0.019061,0.005031,0.00635367,0.008934,
+clCreateContext,1,0.018842,0.018842,0.018842,0.018842,
+clGetPlatformInfo,2,0.015505,0.006472,0.0077525,0.009033,
+clGetEventProfilingInfo,2,0.011874,0.005081,0.005937,0.006793,
+clCreateKernel,1,0.011601,0.011601,0.011601,0.011601,
+clCreateCommandQueue,1,0.011203,0.011203,0.011203,0.011203,
+clGetDeviceIDs,1,0.009196,0.009196,0.009196,0.009196,
+clBuildProgram,1,0.00873,0.00873,0.00873,0.00873,
+clReleaseKernel,1,0.005771,0.005771,0.005771,0.005771,
+clReleaseCommandQueue,1,0.005406,0.005406,0.005406,0.005406,
+clReleaseContext,1,0.004885,0.004885,0.004885,0.004885,
 
 
 Kernel Execution
 Kernel,Number Of Enqueues,Total Time (ms),Minimum Time (ms),Average Time (ms),Maximum Time (ms),
-smithwaterman,1,6.63516,6.63516,6.63516,6.63516,
+smithwaterman,1,6.37553,6.37553,6.37553,6.37553,
 
 
 Compute Unit Utilization
 Device,Compute Unit,Kernel,Global Work Size,Local Work Size,Number Of Calls,Total Time (ms),Minimum Time (ms),Average Time (ms),Maximum Time (ms),
-xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0,smithwaterman_1,smithwaterman,1:1:1,1:1:1,1,6.58524,6.58524,6.58524,6.58524,
+xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0,smithwaterman_1,smithwaterman,1:1:1,1:1:1,1,6.35187,6.35187,6.35187,6.35187,
 
 
 Data Transfer: Host and Global Memory
 Context:Number of Devices,Transfer Type,Number Of Transfers,Transfer Rate (MB/s),Average Bandwidth Utilization (%),Average Size (KB),Total Time (ms),Average Time (ms),
-context0:1,READ,1,1486.263152,15.481908,268501,180.654910,180.654910,
-context0:1,WRITE,3,6446.652676,67.152632,89587.7,41.690329,13.896776,
+context0:1,READ,1,1483.087240,15.448825,268501,181.041768,181.041768,
+context0:1,WRITE,3,6362.077391,66.271639,89587.7,42.244546,14.081515,
 
 
 Data Transfer: Kernels and Global Memory
 Device,Transfer Type,Number Of Transfers,Transfer Rate (MB/s),Average Bandwidth Utilization (%),Average Size (KB),Average Time (ns),Device Execution Time (ms),
-xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0,READ,514,39.5373,0.343205,0.510381,1880.81,6.63516,
-xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0,WRITE,65552,10116.6,87.8176,1.024,480.111,6.63516,
+xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0,READ,514,41.1473,0.357181,0.510381,1741.49,6.37553,
+xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0,WRITE,65552,10528.6,91.3937,1.024,750.067,6.37553,
 
 
 Top Data Transfer: Kernels and Global Memory
 Device,Kernel Name,Number of Transfers,Average Bytes per Transfer,Transfer Efficiency (%),Total Data Transfer (MB),Total Write (MB),Total Read (MB),Transfer Rate (MB/s),Average Bandwidth Utilization (%),
-xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0,ALL,66066,1020,24.9024,67.3875,67.1252,0.262336,10156.1,88.1608,
+xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0,ALL,66066,1020,24.9024,67.3875,67.1252,0.262336,10569.7,91.7509,
 
 
 Top Kernel Execution
 Kernel Instance Address,Kernel,Context ID,Command Queue ID,Device,Start Time (ms),Duration (ms),Global Work Size,Local Work Size,
-17524384,smithwaterman,0,0,xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0,541.217,6.63516,1:1:1,1:1:1,
+13690416,smithwaterman,0,0,xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0,3458.22,6.37553,1:1:1,1:1:1,
 
 
 Top Buffer Writes
 Buffer Address,Context ID,Command Queue ID,Start Time (ms),Duration (ms),Buffer Size (KB),Writing Rate(MB/s),
-17537312,0,0,337.574,41.566553,268501,6459.538177,
-17537040,0,0,337.418,0.104255,262.271,2515.668313,
-17523840,0,0,337.287,0.019521,0.064,3.278521,
+13703296,0,0,3254.25,42.125422,268501,6373.840860,
+13703088,0,0,3254.05,0.097663,262.271,2685.469420,
+13689872,0,0,3253.97,0.021461,0.064,2.982154,
 
 
 Top Buffer Reads
 Buffer Address,Context ID,Command Queue ID,Start Time (ms),Duration (ms),Buffer Size (KB),Reading Rate(MB/s),
-17537312,0,0,547.957,180.654910,268501,1486.263152,
+13703296,0,0,3464.78,181.041768,268501,1483.087240,
 
 
 PRC Parameters
 Parameter,Element,Value,
-DEVICE_EXEC_TIME,xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0,6.635158,
+DEVICE_EXEC_TIME,xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0,6.375534,
 CU_CALLS,xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0|smithwaterman_1,1,
 MEMORY_BIT_WIDTH,xilinx:adm-pcie-ku3:2ddr-xpr:4.0-0,512,
 
