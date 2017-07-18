@@ -1,5 +1,5 @@
 ## sda_examples_aws
-Examples for SDAccel 2017.1+ on AWS F1 instances for Coursera
+Examples for SDAccel 2017.1+ on AWS F1 instances
 
 # Smith-Waterman
 Porting Smith-Waterman code to SDAccel 2017.1 on KU3 with 2 Memory Ports.
