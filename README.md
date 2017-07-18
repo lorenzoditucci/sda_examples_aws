@@ -5,6 +5,7 @@ Examples for SDAccel 2017.1+ on AWS F1 instances
 Porting Smith-Waterman code to SDAccel 2017.1 on KU3 with 2 Memory Ports.
 
 Current Performance: 42.3 GCUPS
+
 Paper [Here](http://ieeexplore.ieee.org/abstract/document/7927082/)
 
 
@@ -24,7 +25,8 @@ Same vector addition as above, deployed with GUI
 
 Hardware Acceleration of a Protein Folding Algorithm. Winning Entry of the Xilinx Open Hardware 2016, more info [here] (http://www.openhw.eu/2016-finalists.html)
 
-Official Repository [here] (https://bitbucket.org/necst/profax-src)
+Official Repository [here](https://bitbucket.org/necst/profax-src)
+
 Paper [here](http://ieeexplore.ieee.org/abstract/document/7740584/)
 
 # Makefile
