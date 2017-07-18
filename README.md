@@ -7,10 +7,6 @@ Porting Smith-Waterman code to SDAccel 2017.1 on KU3 with 2 Memory Ports.
 Current Performance: 42.3 GCUPS
 
 
-# dual-channel-kintex-smithwaterman_ap_int_problem
-This version  has the Makefile from the SHA1 example, adapted for the Smith-Waterman
-
-
 # dual-channel-kintex-smithwaterman_sdx_prj
 Smith-Waterman deployed with GUI
 
@@ -30,3 +26,8 @@ make [emulation | build | clean | clean_sw_emu | clean_hw_emu | clean_hw | clean
  
 ```
 
+# Contacts & Contributions
+
+Contributions to this repo are more than welcome!
+
+For any request shoot an email at lorenzo.ditucci@polimi.it
