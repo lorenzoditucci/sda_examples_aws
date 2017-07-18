@@ -96,18 +96,6 @@ void set_char(unsigned int * array, int index, unsigned char val){
 
 
 void set_char_main(unsigned int  * array, int index, unsigned char val){
-				//unsigned int temp = 0;
-				//temp = val;
-
-				//databaseLocal[(N-1)/4] &= 4294967040;
-				//unsigned int mask = 16777215;
-				//mask = mask >> 8;
-				//array[index/4] = (array[index/4] & mask);
-				/*
-				for(int i = (index % 16) * 2; i < ((index % 16) * 2) + 2; i++){
-					array[index/16] &= ~(1 << i);
-				}
-				*/
 				switch(val){
 					case 'A' : array[index / 16] |= (0 << ((index % 16) * 2));
 							//	array[index/16].range(((index % 16) * 2) + 1, ((index % 16) * 2)) = 0;
@@ -122,10 +110,6 @@ void set_char_main(unsigned int  * array, int index, unsigned char val){
 						//		array[index/16].range(((index % 16) * 2) + 1, ((index % 16) * 2)) = 2;
 							break;
 				}
-    			//array[index / 16] |= (temp << ((index % 16) * 2));
-    			/*unsigned char val;
-    			unsigned int temp = array[index/32];
-    			val = (unsigned char) temp >> (index % 4) * 8;*/
     		}
 
 
@@ -378,17 +362,6 @@ int main(int argc, char** argv)
   // Fill our data sets with pattern
   //
   int i = 0;
-  /*for(i = 0; i < DATA_SIZE; i++) {
-    //a[i] = (int)i;
-    //b[i] = (int)i;
-    results[i] = 0;
-  }*/
-  /*
-  for(int i = 0; i < 32; i++){
-    a[i] = 'A';
-    b[i] = 'C';
-  } */
-
   	for(i = 0; i < 256*(N+M-1); i++) results2[i] = 0;
 	for(i = 0; i < N/16; i++) query_param[i] = 0;
 	for(i = 0; i < (M + 2*(N))/16; i++) database_param[i] = 0;
@@ -720,17 +693,7 @@ cl_event enqueue_kernel;
 	unsigned short * out_matrix = (unsigned short *)malloc(sizeof(unsigned short) * N * M);
     //order_matrix_blocks(tempMatrix, out_matrix);
 	order_matrix_blocks(tempMatrixBis, out_matrix);  
-printf("res\n");
-  /*
-  for (i=0;i<3040;i++) {
-    printf("%d ",results[i]);
-    if (((i+1) % 32) == 0)
-      printf("\n");
-  }*/
-
-    //unsigned int matrix[N*M];
-    //unsigned short directionMatrixSW[N*M];
-    unsigned int * matrix = (unsigned int *)malloc(sizeof(unsigned int) * N * M);
+   unsigned int * matrix = (unsigned int *)malloc(sizeof(unsigned int) * N * M);
     unsigned short * directionMatrixSW = (unsigned short*)malloc(sizeof(unsigned short) * N * M);
 
 	//TestBench
@@ -776,13 +739,7 @@ printf("res\n");
 
     const short match = (a[ii] == database[jj]) ?  MATCH : MISS_MATCH;
     int val1 = northwest + match;
-    /*
-    if(i == 1002) {
-      printf("west %d, north %d, northwest %d - query %c, database %c, val1 %d , match %d\n", west, north, northwest, query[ii], database[jj], val1, match);
-      printf("ii %d, jj %d \n", ii, jj);
-    }
-    */
-
+    
     if (val1 > val) {
       val = val1;
         dir = NORTH_WEST;
